@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .main {
+                width: 600px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-around;
+            }
+            .lamp {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-color: rgb(133, 127, 127);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div id="red" class="lamp"></div>
+            <div id="yellow" class="lamp"></div>
+            <div id="green" class="lamp"></div>
+        </div>
+        <script>
+            function sleep(awit) {
+                return new Promise((resolove) => {
+                    setTimeout(resolove, awit);
+                });
+            }
+            async function changeColor(id, color, wait) {
+                let lamp = Array.from(document.getElementsByClassName('lamp'));
+                lamp.forEach((e) => {
+                    if (e.id === color) {
+                        e.style.backgroundColor = color;
+                    } else {
+                        e.style.backgroundColor = 'rgb(133, 127, 127)';
+                    }
+                });
+                await sleep(wait);
+            }
+            async function run() {
+                while (true) {
+                    await changeColor('red', 'red', 3000);
+                    await changeColor('yellow', 'yellow', 2000);
+                    await changeColor('green', 'green', 3000);
+                }
+            }
+            run();
+        </script>
+    </body>
+</html>
