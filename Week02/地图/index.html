@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #app {
+                width: 1200px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .child {
+                width: 40px;
+                height: 40px;
+                box-sizing: border-box;
+                border: 1px solid black;
+                line-height: 40px;
+                text-align: center;
+            }
+            .action {
+                margin-top: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+        <div class="action">
+            <button onclick="saveMapData()">保存当前数据</button>
+        </div>
+        <script src="./index.js"></script>
+    </body>
+</html>
