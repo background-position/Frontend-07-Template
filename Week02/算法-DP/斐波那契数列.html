@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let Mycache = {
+                1: 1,
+                2: 2,
+            };
+            console.time('1');
+            function fcatch(n) {
+                if (Mycache[n]) {
+                    return Mycache[n];
+                } else {
+                    Mycache[n] = fcatch(n - 1) + fcatch(n - 2);
+                    return fcatch(n - 1) + fcatch(n - 2);
+                }
+            }
+            console.log(fcatch(39));
+            console.timeEnd('1');
+            console.time('2');
+            function f(n) {
+                if (n == 1) {
+                    return 1;
+                }
+                if (n === 2) {
+                    return 2;
+                }
+                return f(n - 1) + f(n - 2);
+            }
+            console.log(f(39));
+            console.timeEnd('2');
+        </script>
+    </body>
+</html>

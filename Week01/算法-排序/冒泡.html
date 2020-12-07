@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // 冒泡排序，依次进行比较，小的放前面，大的放后面，两次循环遍历
+            let arr = [9, 22, 11, 44, 1, 33, 55, 6, 3, 88, 7];
+            const BubbleSort = function (arr) {
+                let len = arr.length;
+                for (let i = 0; i < len; i++) {
+                    for (let j = 0; j < len; j++) {
+                        if (arr[j] > arr[j + 1]) {
+                            //如果当前的数字大于后一位的数字，那么两个数字进行交换
+                            let tmp = arr[j]; //保存当前变量，防止丢失数据
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = tmp;
+                        }
+                    }
+                }
+                return arr;
+            };
+            let res = BubbleSort(arr);
+            document.write(res);
+        </script>
+    </body>
+</html>
