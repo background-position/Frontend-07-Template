@@ -33,19 +33,22 @@ document.addEventListener('mouseup', () => {
 function saveMapData() {
     localStorage.setItem('mapData', JSON.stringify(mapData));
 }
-async function path(map, start, end) {
+async function findPath(map, start, end, pre) {
+    let table = Object.create(mapData);
     let queue = [start];
-    async function insert(x, y) {
+    async function insert(x, y, pre) {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
             //遇到边界
             return;
         }
-        if (map[x * 100 + y]) {
+        if (map[y * 100 + x]) {
             return;
         }
         await sleep();
-        parent.children[x * 100 + y].style.backgroundColor = 'green';
-        map[x * 100 + y] = 2;
+        table[y * 100 + x] = pre;
+        changeChildColor(x, y, 'green');
+        //   parent.children[y * 100 + x].style.backgroundColor = 'green';
+        map[y * 100 + x] = 2;
         queue.push([x, y]);
     }
     while (queue.length) {
@@ -54,14 +57,27 @@ async function path(map, start, end) {
         console.log(x, y);
         if (x === end[0] && y === end[1]) {
             //当前到达终点
-            parent.children[x * 100 + y].style.backgroundColor = 'pink';
-            return true;
+            changeChildColor(x, y, 'yellow');
+            //   parent.children[y * 100 + x].style.backgroundColor = 'yellow';
+            let path = [];
+            while (x !== start[0] && y !== start[1]) {
+                path.push(mapData[y * 100 + x]);
+                [x, y] = table[y * 100 + x];
+                changeChildColor(x, y, 'pink');
+                //   parent.children[y * 100 + x].style.backgroundColor = 'pink';
+            }
+            return path;
+        } else {
+            //对所有的点进行周围遍历
+            await insert(x - 1, y, [x, y]);
+            await insert(x + 1, y, [x, y]);
+            await insert(x, y - 1, [x, y]);
+            await insert(x, y + 1, [x, y]);
+            await insert(x - 1, y - 1, [x, y]);
+            await insert(x - 1, y + 1, [x, y]);
+            await insert(x + 1, y + 1, [x, y]);
+            await insert(x - 1, y - 1, [x, y]);
         }
-        //对所有的点进行周围遍历
-        await insert(x - 1, y);
-        await insert(x + 1, y);
-        await insert(x, y - 1);
-        await insert(x, y + 1);
     }
 }
 
@@ -69,4 +85,14 @@ function sleep(t = 100) {
     return new Promise((resolve) => {
         setTimeout(resolve, t);
     });
+}
+function run() {
+    // let res = window.prompt('请输入要到达的位置');
+    // let end = res.split(',');
+    // console.log(end);
+    findPath(mapData, [4, 0], [19, 25]);
+    //   changeChildColor(4, 4, 'red');
+}
+function changeChildColor(x, y, clolor) {
+    parent.children[y * 100 + x].style.backgroundColor = clolor;
 }
