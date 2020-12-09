@@ -33,8 +33,12 @@ document.addEventListener('mouseup', () => {
 function saveMapData() {
     localStorage.setItem('mapData', JSON.stringify(mapData));
 }
-async function findPath(map, start, end, pre) {
+async function findPath(map, start, end) {
     let table = Object.create(mapData);
+    if (checkIsHas(start) || checkIsHas(end)) {
+        alert('当前点已被封住');
+        return;
+    }
     let queue = [start];
     async function insert(x, y, pre) {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
@@ -80,8 +84,10 @@ async function findPath(map, start, end, pre) {
         }
     }
 }
-
-function sleep(t = 100) {
+function checkIsHas(path) {
+    return mapData[path[1] * 100 + path[0]];
+}
+function sleep(t = 1) {
     return new Promise((resolve) => {
         setTimeout(resolve, t);
     });
