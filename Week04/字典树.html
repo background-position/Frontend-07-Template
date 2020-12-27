@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let $ = Symbol('$');
+            class Tree {
+                constructor() {
+                    //创建字典树的根节点
+                    this._root = Object.create(null);
+                }
+                //字典树的插入方法
+                insert(word) {
+                    let node = this._root;
+                    for (const t of word) {
+                        if (!node[t]) {
+                            //当前字典树里面没有
+                            node[t] = Object.create(null);
+                            //进行下一级的查找
+                            node = node[t];
+                        }
+                    }
+                    if (!($ in node)) {
+                        //如果不存在
+                        node[$] = 0;
+                    }
+                    node[$]++;
+                }
+                most() {
+                    let max = 0;
+                    let maxWord = null;
+                    let viset = (node, word) => {
+                        if (node[$] && node[$] > max) {
+                            max = node[$];
+                            maxWord = word;
+                        }
+                        for (const p in node) {
+                            viset(node[p], word + p); //拼接字符串
+                        }
+                    };
+                    viset(this._root, '');
+                    console.log(this._root);
+                }
+            }
+            function randomWords(num) {
+                let str = '';
+                for (let i = 0; i < num; i++) {
+                    str += 'abc';
+                }
+                return str;
+            }
+            let test = new Tree();
+            test.insert(randomWords(1));
+        </script>
+    </body>
+</html>

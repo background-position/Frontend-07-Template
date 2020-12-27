@@ -68,13 +68,12 @@ class Map {
                 }
                 return;
             }
-            //  1,3
+
             insert(x, y - 1, [x, y]);
-            //  1,5
+
             insert(x, y + 1, [x, y]);
-            //0,4
             insert(x - 1, y, [x, y]);
-            //2,4
+
             insert(x + 1, y, [x, y]);
             insert(x - 1, y - 1, [x, y]);
             insert(x + 1, y + 1, [x, y]);
